@@ -24,14 +24,21 @@ app.get("/", function(req, res) {
 })
 
 // serve JSON from method to the /json path
-app.get('/json', function(req, res){
-  res.json({"message": "Hello json",
-           "desription": "express training from free code camp"
-           });
+app.get('/json', function(req, res) {
+  // secreates demonstaration using the .env file
+  if(process.env.MESSAGE_STYLE == 'uppercase'){
+    jsonResponse = 'Hello json'.toUpperCase()
+  }
+  // secreates demonstaration using the .env file
+  else if (process.env.MESSAGE_STYLE == 'lowercase') {
+    jsonResponse = 'Hello json'.toLowerCase()
+  }
+  else {
+    jsonResponse = 'Hello json'
+  }
+  res.json({"message": jsonResponse,
+           "desription": "express training from free code camp"});
 })
-
-
-
 
 
 
