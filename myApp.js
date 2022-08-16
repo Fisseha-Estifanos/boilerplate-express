@@ -59,11 +59,6 @@ app.get('/now', function chainedMiddleware(req, res, next) {
                 }
 );
 
-// serve HTML file from views folder
-app.get("/", function(req, res) {
-  //console.log(req, res)
-  res.sendFile(indexHtmlAbsolutePath);
-})
 
 // serve JSON from method to the /json path
 app.get('/json', function(req, res) {
@@ -83,7 +78,23 @@ app.get('/json', function(req, res) {
            //"req": req,
            //"res": res
            });
+});
+
+
+// the echo server route endpoint
+app.get("/:word/echo", function sendEcho(req, res, next) {
+  wordToEcho = req.params.word
+  res.json({echo: wordToEcho})
+});
+
+
+// serve HTML file from views folder
+app.get("/", function(req, res) {
+  //console.log(req, res)
+  res.sendFile(indexHtmlAbsolutePath);
 })
+
+
 
 
 
