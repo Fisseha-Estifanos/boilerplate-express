@@ -7,33 +7,62 @@ console.log("Hello World")
 
 // path for the views folder,
 // contating html files
-indexHtmlabsolutePath = __dirname + '/views/index.html'
-
+indexHtmlAbsolutePath = __dirname + '/views/index.html'
 
 // path for the css file
 cssFolderAbsolutePath = __dirname + '/public'
 
-// a root middleware function to log stuff
-function middleware(req, res, next) {
+function getDateTimeNow()
+  {
+    var currentdate = new Date(); 
+    var datetime = "Last Sync: " + currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+    return datetime
+  }
+
+// a root level middleware to log stuff
+function rootLevelLoggerMiddleware(req, res, next) {
   method = req.method;
   path = req.path;
   ip = req.ip;
+
+  datetime = getDateTimeNow()
+  console.log(datetime);
+
   console.log(method + " " + path + " - " + ip);
   next();
 }
 
 // mount root level midleware function
-app.use("/", middleware)
+app.use("/", rootLevelLoggerMiddleware)
 
 // add css to the express web application frame work and
 // mount the css to the web applicatio frame work
 app.use("/public", express.static(cssFolderAbsolutePath))
 
 
+// adding a chained middleware as a time display
+// on the 'now' route
+app.get('/now', function chainedMiddleware(req, res, next) {
+                  req.time = new Date().toString();
+                  next();
+                }, function middleHandler(req, res, next) {
+                      console.log('middle handler: passing handle to final handle');
+                      next();
+                }, function finalHandler(req, res) {
+                      res.json({time: req.time})
+                      console.log('final handler: over and out')
+                }
+);
+
 // serve HTML file from views folder
 app.get("/", function(req, res) {
   //console.log(req, res)
-  res.sendFile(indexHtmlabsolutePath);
+  res.sendFile(indexHtmlAbsolutePath);
 })
 
 // serve JSON from method to the /json path
