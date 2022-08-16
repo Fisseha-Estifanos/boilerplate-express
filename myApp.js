@@ -13,13 +13,26 @@ indexHtmlabsolutePath = __dirname + '/views/index.html'
 // path for the css file
 cssFolderAbsolutePath = __dirname + '/public'
 
+// a root middleware function to log stuff
+function middleware(req, res, next) {
+  method = req.method;
+  path = req.path;
+  ip = req.ip;
+  console.log(method + " " + path + " - " + ip);
+  next();
+}
+
+// mount root level midleware function
+app.use("/", middleware)
+
 // add css to the express web application frame work and
 // mount the css to the web applicatio frame work
-app.use('/public', express.static(cssFolderAbsolutePath))
+app.use("/public", express.static(cssFolderAbsolutePath))
 
 
 // serve HTML file from views folder
 app.get("/", function(req, res) {
+  //console.log(req, res)
   res.sendFile(indexHtmlabsolutePath);
 })
 
@@ -37,7 +50,10 @@ app.get('/json', function(req, res) {
     jsonResponse = 'Hello json'
   }
   res.json({"message": jsonResponse,
-           "desription": "express training from free code camp"});
+           "desription": "express training from free code camp",
+           //"req": req,
+           //"res": res
+           });
 })
 
 
