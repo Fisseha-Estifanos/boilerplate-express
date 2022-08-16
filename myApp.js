@@ -83,7 +83,14 @@ app.get('/json', function(req, res) {
 
 // the echo server route endpoint
 app.get("/:word/echo", function sendEcho(req, res, next) {
+  // Eg. https://boilerplate-express.fisseha-estifan.repl.co/freecodecamp/echo
+  // will return: {
+  // "echo": "freecodecamp"
+  //  }
+  // get the word to echo
   wordToEcho = req.params.word
+  // send the json formated response 
+  // echo using the res.json function
   res.json({echo: wordToEcho})
 });
 
