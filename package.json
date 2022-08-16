@@ -21,8 +21,8 @@
 	"description": "This is a Node js backend training project from the freecodecamp website. If successful it will grow to be the backend for my ideal project named 'the ROPHNAN'.",
 	"keywords": ["Backend", "Nodejs", "freecodecamp", "initial training", "learning path"],
 	"license": "MIT",
-},
 "repository": {
 		"type": "git",
 		"url": "https://github.com/boilerplate-express.git"
 	}
+}
