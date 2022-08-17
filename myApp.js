@@ -1,4 +1,5 @@
 let express = require('express');
+var bodyParser = require('body-parser');
 let app = express();
 console.log("Hello World")
 //app.get("/", function(req, res) {
@@ -108,17 +109,32 @@ function sendEcho(req, res, next) {
 // the echo server endpoint
 app.get("/:word/echo", sendEcho);
 
+
+// mount the body parser, both for JSON and default string
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
 // the get query string parameter handler
-function queryStringHandler(req, res, next) {
+function queryStringHandlerGet(req, res, next) {
   fname = req.query.first;
   lname = req.query.last;
-  res.json({ name: '' + fname + ' ' + lname});
+  res.json({ name: '' + fname + ' ' + lname,
+             response: 'GET'});
+}
+
+// the post query string parameter handler
+function queryStringHandlerPost(req, res, next) {
+  fname = req.body.first;
+  lname = req.body.last;
+  res.json({ name: '' + fname + ' ' + lname,
+             response: 'POST'});
 }
 
 // get query string parameter from the client end point
 // both for the get and post requestes chained into one
 // line of command
-app.route("/name").get(queryStringHandler).post(queryStringHandler);
+app.route("/name").get(queryStringHandlerGet).post(queryStringHandlerPost);
 
 // serve HTML file from views folder
 app.get("/", function(req, res) {
