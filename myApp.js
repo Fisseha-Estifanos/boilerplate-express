@@ -37,11 +37,11 @@ function rootLevelLoggerMiddleware(req, res, next) {
 }
 
 // mount root level midleware function
-app.use("/", rootLevelLoggerMiddleware)
+app.use("/", rootLevelLoggerMiddleware);
 
 // add css to the express web application frame work and
 // mount the css to the web applicatio frame work
-app.use("/public", express.static(cssFolderAbsolutePath))
+app.use("/public", express.static(cssFolderAbsolutePath));
 
 
 // some handlers to test the chain middleware in other method
@@ -52,7 +52,7 @@ function chainedMiddleware(req, res, next) {
 };
 
 // second/middle handler
- function middleHandler(req, res, next) {
+function middleHandler(req, res, next) {
   console.log('middle handler: passing handle to final handle');
   next();
 }
@@ -106,10 +106,19 @@ function sendEcho(req, res, next) {
 }
 
 // the echo server endpoint
-app.get("/:word/echo", sendEcho)
+app.get("/:word/echo", sendEcho);
 
-// get query string parameter from the client
-// app.route("/name").get(queryStringHandler).post(queryStringHandler);
+// the get query string parameter handler
+function queryStringHandler(req, res, next) {
+  fname = req.query.name;
+  lname = req.query.father;
+  res.json({ name: '' + fname + ' ' + lname});
+}
+
+// get query string parameter from the client end point
+// both for the get and post requestes chained into one
+// line of command
+app.route("/name").get(queryStringHandler).post(queryStringHandler);
 
 // serve HTML file from views folder
 app.get("/", function(req, res) {
