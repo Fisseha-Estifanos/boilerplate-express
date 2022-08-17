@@ -12,17 +12,16 @@ indexHtmlAbsolutePath = __dirname + '/views/index.html'
 // path for the css file
 cssFolderAbsolutePath = __dirname + '/public'
 
-function getDateTimeNow()
-  {
-    var currentdate = new Date(); 
-    var datetime = "Last Sync: " + currentdate.getDate() + "/"
-                + (currentdate.getMonth()+1)  + "/" 
-                + currentdate.getFullYear() + " @ "  
-                + currentdate.getHours() + ":"  
-                + currentdate.getMinutes() + ":" 
-                + currentdate.getSeconds();
-    return datetime
-  }
+function getDateTimeNow() {
+  var currentdate = new Date(); 
+  var datetime = "Last Sync: " + currentdate.getDate() + "/"
+              + (currentdate.getMonth()+1)  + "/" 
+              + currentdate.getFullYear() + " @ "  
+              + currentdate.getHours() + ":"  
+              + currentdate.getMinutes() + ":" 
+              + currentdate.getSeconds();
+  return datetime
+}
 
 // a root level middleware to log stuff
 function rootLevelLoggerMiddleware(req, res, next) {
@@ -45,19 +44,25 @@ app.use("/", rootLevelLoggerMiddleware)
 app.use("/public", express.static(cssFolderAbsolutePath))
 
 
+// some functions to test the chain middleware in other method
+function chainedMiddleware(req, res, next) {
+  req.time = new Date().toString();
+  next();
+};
+
+ function middleHandler(req, res, next) {
+  console.log('middle handler: passing handle to final handle');
+  next();
+}
+
+function finalHandler(req, res) {
+  res.json({time: req.time})
+  console.log('final handler: over and out')
+}
+
 // adding a chained middleware as a time display
 // on the 'now' route
-app.get('/now', function chainedMiddleware(req, res, next) {
-                  req.time = new Date().toString();
-                  next();
-                }, function middleHandler(req, res, next) {
-                      console.log('middle handler: passing handle to final handle');
-                      next();
-                }, function finalHandler(req, res) {
-                      res.json({time: req.time})
-                      console.log('final handler: over and out')
-                }
-);
+app.get('/now', chainedMiddleware, middleHandler, finalHandler);
 
 
 // serve JSON from method to the /json path
@@ -80,8 +85,8 @@ app.get('/json', function(req, res) {
            });
 });
 
-
-// the echo server route endpoint
+// Get Route Parameter Input from the Client
+// the echo server endpoint
 app.get("/:word/echo", function sendEcho(req, res, next) {
   // Eg. https://boilerplate-express.fisseha-estifan.repl.co/freecodecamp/echo
   // will return: {
