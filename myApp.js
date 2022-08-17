@@ -44,17 +44,20 @@ app.use("/", rootLevelLoggerMiddleware)
 app.use("/public", express.static(cssFolderAbsolutePath))
 
 
-// some functions to test the chain middleware in other method
+// some handlers to test the chain middleware in other method
+// base handler
 function chainedMiddleware(req, res, next) {
   req.time = new Date().toString();
   next();
 };
 
+// second/middle handler
  function middleHandler(req, res, next) {
   console.log('middle handler: passing handle to final handle');
   next();
 }
 
+// last/final handler
 function finalHandler(req, res) {
   res.json({time: req.time})
   console.log('final handler: over and out')
@@ -65,8 +68,8 @@ function finalHandler(req, res) {
 app.get('/now', chainedMiddleware, middleHandler, finalHandler);
 
 
-// serve JSON from method to the /json path
-app.get('/json', function(req, res) {
+// the Json formated Data endpoint handler
+function getJsonFormatedData(req, res) {
   // secreates demonstaration using the .env file
   if(process.env.MESSAGE_STYLE == 'uppercase'){
     jsonResponse = 'Hello json'.toUpperCase()
@@ -83,11 +86,14 @@ app.get('/json', function(req, res) {
            //"req": req,
            //"res": res
            });
-});
+}
+
+// serve JSON from method to the /json path
+app.get('/json', getJsonFormatedData);
 
 // Get Route Parameter Input from the Client
-// the echo server endpoint
-app.get("/:word/echo", function sendEcho(req, res, next) {
+// the echo server handler
+function sendEcho(req, res, next) {
   // Eg. https://boilerplate-express.fisseha-estifan.repl.co/freecodecamp/echo
   // will return: {
   // "echo": "freecodecamp"
@@ -97,8 +103,13 @@ app.get("/:word/echo", function sendEcho(req, res, next) {
   // send the json formated response 
   // echo using the res.json function
   res.json({echo: wordToEcho})
-});
+}
 
+// the echo server endpoint
+app.get("/:word/echo", sendEcho)
+
+// get query string parameter from the client
+// app.route("/name").get(queryStringHandler).post(queryStringHandler);
 
 // serve HTML file from views folder
 app.get("/", function(req, res) {
