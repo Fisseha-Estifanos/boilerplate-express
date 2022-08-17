@@ -110,8 +110,8 @@ app.get("/:word/echo", sendEcho);
 
 // the get query string parameter handler
 function queryStringHandler(req, res, next) {
-  fname = req.query.name;
-  lname = req.query.father;
+  fname = req.query.first;
+  lname = req.query.last;
   res.json({ name: '' + fname + ' ' + lname});
 }
 
