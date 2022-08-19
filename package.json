@@ -2,7 +2,7 @@
   "name": "fcc-learn-node-with-express",
   "version": "0.1.0",
   "description": "This is a Node js backend training project from the freecodecamp website. If successful it will grow to be the backend for my ideal project named 'the ROPHNAN'.",
-  "keywords": ["Backend", "Nodejs", "freecodecamp", "initial training", "learning path"],
+  "keywords": ["Backend", "Nodejs", "npm", "freecodecamp", "initial training", "learning path"],
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.2",
