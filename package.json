@@ -1,6 +1,9 @@
 {
   "name": "fcc-learn-node-with-express",
   "version": "0.1.0",
+  "description": "This is a Node js backend training project from the freecodecamp website. If successful it will grow to be the backend for my ideal project named 'the ROPHNAN'.",
+  "keywords": ["Backend", "Nodejs", "freecodecamp", "initial training", "learning path"],
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
@@ -12,17 +15,14 @@
   "scripts": {
     "start": "node server.js"
   },
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/boilerplate-express.git"
+  },
   "author": {
 		"name": "Fisseha Estifanos",
 		"email": "Fisseha.137@gmail.com",
 		"github profile": "https://github.com/Fisseha-Estifanos",
 		"linkedin profile": "https://www.linkedin.com/in/fisseha-estifanos-109ba6199/"
-	},
-	"description": "This is a Node js backend training project from the freecodecamp website. If successful it will grow to be the backend for my ideal project named 'the ROPHNAN'.",
-	"keywords": ["Backend", "Nodejs", "freecodecamp", "initial training", "learning path"],
-	"license": "MIT",
-"repository": {
-		"type": "git",
-		"url": "https://github.com/boilerplate-express.git"
 	}
 }
